@@ -5,7 +5,7 @@
 
 	interface IProps extends HTMLButtonAttributes {
 		leftIconSnippet?: Snippet<[boolean]>
-		childrenQ: Snippet<[boolean]>
+		childrenQ: Snippet<[boolean]> // don't use childrenQ or any other variation of children because children is a reserved syntaxis and renaming it may cause bugs with children render
 		rightIconSnippet?: Snippet
 		size?: 'sm' | 'lg'
 		shadow?: boolean
