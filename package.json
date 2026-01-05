@@ -26,6 +26,7 @@
 		"globals": "^16.5.0",
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.4.0",
+		"sass-embedded": "^1.97.1",
 		"svelte": "^5.45.6",
 		"svelte-check": "^4.3.4",
 		"typescript": "^5.9.3",
@@ -35,8 +36,10 @@
 	"dependencies": {
 		"@tailwindcss/vite": "^4.1.18",
 		"clsx": "^2.1.1",
+		"lorem-ipsum": "^2.0.8",
 		"lucide-svelte": "^0.562.0",
 		"tailwind-merge": "^3.4.0",
-		"tailwindcss": "^4.1.18"
+		"tailwindcss": "^4.1.18",
+		"uuid": "^13.0.0"
 	}
 }
