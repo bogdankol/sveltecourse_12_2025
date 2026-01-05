@@ -1,68 +1,40 @@
 <script lang="ts">
-	import DisplayName from '$lib/Components/DisplayName.svelte'
-	import RandomNumber from '$lib/Components/RandomNumber.svelte'
-	import Counter from '$lib/Components/Counter.svelte'
-	import ButtonWithSnippets from '$lib/Components/ButtonWithSnippets.svelte'
-	import ButtonWithoutSnippets from '$lib/Components/ButtonWithoutSnippets.svelte'
+	
+  const targetObj = {
+    firstName: 'bohdan',
+    lastName: 'kol',
+    get fullName() {
+      return `${this.firstName} ${this.lastName}`
+    },
+    occupations: [],
+    set occupation(value: string) {
+      this.occupations.push(value)
+    }
+  }
 
-	import { AlarmClockCheck, Search, AArrowDown } from 'lucide-svelte'
+  targetObj.firstName = 'bohdan2'
+  targetObj.occupation = 'occup1'
+  // console.log({targetObj})
 
-	let buttonPageRef: ButtonWithoutSnippets // as svelte component
+  const handlersObj = {
+    get(target: any, prop: any) {
+      console.log({target, prop})
+      this.check(target, prop)
+      return target[prop]
+    },
+    set(target: any, prop: any, value: any) {
+      this.check(target, prop)
+      target[prop] = value
+      return true
+    },
+    check(target: any, prop: any) {
+      if(!target[prop]) throw Error('No such prop in object')
+    }
+  }
 
-	$effect(() => {
-		console.log({ buttonPageRef, btnRefReceivedFromChild: buttonPageRef.getBtnRef() })
-		// buttonPageRef.focusFunc() // here is works because we have function focusFunc() inside child
-    buttonPageRef.getBtnRef().focus() // it works because getBtnRef returns html btn object that has focus() method
-	})
+  const proxyObj = new Proxy(targetObj, handlersObj)
+
+  proxyObj.firstName = 'asdasd'
+  console.log(proxyObj)
+
 </script>
-
-<!-- <DisplayName /> -->
-<!-- <RandomNumber /> -->
-<!-- <Counter /> -->
-
-<!-- first approach is to contain all snippets in ButtonWithSnippets -->
-<!-- <ButtonWithSnippets leftIcon rightIcon>Text</ButtonWithSnippets> -->
-
-<!-- second approach is to pass all snippets to ButtonWithoutSnippets and render them there as props and children -->
-<div class="wrapper">
-	<div
-		role="presentation"
-		onclick={() => {
-			console.log('clicked div')
-		}}
-	>
-		<ButtonWithoutSnippets
-			bind:this={buttonPageRef}
-			size="sm"
-			shadow
-			bgColor="#5DC9A8"
-			textColor="#9457EB"
-			onclick={e => {
-				e.stopPropagation()
-				console.log('clicked btn')
-			}}
-			onLeftIconHover={() => console.log('leftHovered')}
-			onRightIconHover={() => console.log('leftHovered')}
-		>
-			{#snippet leftIconSnippet(isHovered: boolean)}
-				{#if isHovered}
-					<Search />
-				{:else}
-					<AArrowDown />
-				{/if}
-			{/snippet}
-			{#snippet childrenQ(isLeftHovered: boolean)}
-				{isLeftHovered}
-			{/snippet}
-			{#snippet rightIconSnippet()}
-				<AlarmClockCheck />
-			{/snippet}
-		</ButtonWithoutSnippets>
-	</div>
-</div>
-
-<style lang="postcss">
-	.wrapper :global(button) {
-		width: 250px;
-	}
-</style>
