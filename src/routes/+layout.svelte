@@ -15,7 +15,8 @@
 	/* @reference "tailwindcss"; */
 	:global {
 		body {
-			background-color: #368;
+			background-color: rgb(190, 202, 210);
+      color: white;
 			font-family: 'Roboto', sans-serif;
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
